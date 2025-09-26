@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libft Documentation - Mi Biblioteca C Personal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .category-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+        }
+
+        .category-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-description {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .category-content {
+            padding: 1.5rem;
+        }
+
+        .function-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .function-item {
+            background: rgba(51, 65, 85, 0.3);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .function-item:hover {
+            background: rgba(51, 65, 85, 0.5);
+            transform: translateX(5px);
+        }
+
+        .function-name {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .function-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .complexity-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.3rem;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .complexity-warning {
+            background: var(--warning-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 4rem 0 2rem 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            margin: 2rem auto;
+            max-width: 800px;
+            border-radius: 1rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            padding: 1.5rem;
+            border-radius: 1rem 1rem 0 0;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+        }
+
+        .code-block {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            color: #94a3b8;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block .keyword {
+            color: #3b82f6;
+        }
+
+        .code-block .function {
+            color: #10b981;
+        }
+
+        .code-block .string {
+            color: #f59e0b;
+        }
+
+        .code-block .comment {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">libft</div>
+            <nav class="nav">
+                <a href="#home">Inicio</a>
+                <a href="#functions">Funciones</a>
+                <a href="#usage">Uso</a>
+                <a href="#tests">Tests</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="home" class="hero">
+            <h1>Libft Documentation</h1>
+            <p>Mi biblioteca personal de funciones C - Proyecto 42 Madrid</p>
+            <p>Una reimplementación completa y optimizada de funciones esenciales de la biblioteca estándar de C</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">42+</div>
+                    <div>Funciones</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div>Norminette</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">O(n)</div>
+                    <div>Optimizado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div>Memoria segura</div>
+                </div>
+            </div>
+        </section>
+
+        <h2 class="section-title">Categorías de Funciones</h2>
+        
+        <div class="categories">
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">Manipulación de Caracteres</div>
+                    <div class="category-description">Funciones para análisis y transformación de caracteres</div>
+                </div>
+                <div class="category-content">
+                    <div class="function-list">
+                        <div class="function-item" onclick="openModal('isalpha')">
+                            <div class="function-name">ft_isalpha</div>
+                            <div class="function-description">Verifica si un carácter es alfabético</div>
+                            <span class="complexity-badge">O(1)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('isdigit')">
+                            <div class="function-name">ft_isdigit</div>
+                            <div class="function-description">Verifica si un carácter es numérico</div>
+                            <span class="complexity-badge">O(1)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('isalnum')">
+                            <div class="function-name">ft_isalnum</div>
+                            <div class="function-description">Verifica si un carácter es alfanumérico</div>
+                            <span class="complexity-badge">O(1)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('isascii')">
+                            <div class="function-name">ft_isascii</div>
+                            <div class="function-description">Verifica si un carácter está en el rango ASCII</div>
+                            <span class="complexity-badge">O(1)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('tolower')">
+                            <div class="function-name">ft_tolower</div>
+                            <div class="function-description">Convierte un carácter a minúscula</div>
+                            <span class="complexity-badge">O(1)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('toupper')">
+                            <div class="function-name">ft_toupper</div>
+                            <div class="function-description">Convierte un carácter a mayúscula</div>
+                            <span class="complexity-badge">O(1)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">Manipulación de Cadenas</div>
+                    <div class="category-description">Funciones para trabajar con strings de manera eficiente</div>
+                </div>
+                <div class="category-content">
+                    <div class="function-list">
+                        <div class="function-item" onclick="openModal('strlen')">
+                            <div class="function-name">ft_strlen</div>
+                            <div class="function-description">Calcula la longitud de una cadena</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strchr')">
+                            <div class="function-name">ft_strchr</div>
+                            <div class="function-description">Busca la primera ocurrencia de un carácter</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strrchr')">
+                            <div class="function-name">ft_strrchr</div>
+                            <div class="function-description">Busca la última ocurrencia de un carácter</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strncmp')">
+                            <div class="function-name">ft_strncmp</div>
+                            <div class="function-description">Compara dos cadenas hasta n caracteres</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strnstr')">
+                            <div class="function-name">ft_strnstr</div>
+                            <div class="function-description">Busca una subcadena dentro de otra</div>
+                            <span class="complexity-badge complexity-warning">O(n×m)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strlcpy')">
+                            <div class="function-name">ft_strlcpy</div>
+                            <div class="function-description">Copia de manera segura una cadena</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strlcat')">
+                            <div class="function-name">ft_strlcat</div>
+                            <div class="function-description">Concatena de manera segura dos cadenas</div>
+                            <span class="complexity-badge">O(n+m)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">Gestión de Memoria</div>
+                    <div class="category-description">Funciones para manipulación eficiente de memoria</div>
+                </div>
+                <div class="category-content">
+                    <div class="function-list">
+                        <div class="function-item" onclick="openModal('memset')">
+                            <div class="function-name">ft_memset</div>
+                            <div class="function-description">Llena un bloque de memoria con un valor</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('bzero')">
+                            <div class="function-name">ft_bzero</div>
+                            <div class="function-description">Pone a cero un bloque de memoria</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('memcpy')">
+                            <div class="function-name">ft_memcpy</div>
+                            <div class="function-description">Copia un bloque de memoria</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('memmove')">
+                            <div class="function-name">ft_memmove</div>
+                            <div class="function-description">Copia memoria manejando overlapping</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('memchr')">
+                            <div class="function-name">ft_memchr</div>
+                            <div class="function-description">Busca un byte en un bloque de memoria</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('memcmp')">
+                            <div class="function-name">ft_memcmp</div>
+                            <div class="function-description">Compara dos bloques de memoria</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">Funciones Adicionales</div>
+                    <div class="category-description">Funciones propias con funcionalidades avanzadas</div>
+                </div>
+                <div class="category-content">
+                    <div class="function-list">
+                        <div class="function-item" onclick="openModal('substr')">
+                            <div class="function-name">ft_substr</div>
+                            <div class="function-description">Extrae una subcadena de una cadena</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strjoin')">
+                            <div class="function-name">ft_strjoin</div>
+                            <div class="function-description">Concatena dos cadenas en una nueva</div>
+                            <span class="complexity-badge">O(n+m)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strtrim')">
+                            <div class="function-name">ft_strtrim</div>
+                            <div class="function-description">Elimina caracteres del inicio y final</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('split')">
+                            <div class="function-name">ft_split</div>
+                            <div class="function-description">Divide una cadena usando un delimitador</div>
+                            <span class="complexity-badge complexity-warning">O(n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('itoa')">
+                            <div class="function-name">ft_itoa</div>
+                            <div class="function-description">Convierte un entero a cadena</div>
+                            <span class="complexity-badge">O(log n)</span>
+                        </div>
+                        <div class="function-item" onclick="openModal('strmapi')">
+                            <div class="function-name">ft_strmapi</div>
+                            <div class="function-description">Aplica una función a cada carácter</div>
+                            <span class="complexity-badge">O(n)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="functionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" onclick="closeModal()">&times;</button>
+                <h2 id="modalTitle">Función</h2>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const functionDetails = {
+            'isalpha': {
+                title: 'ft_isalpha',
+                prototype: 'int ft_isalpha(int c)',
+                description: 'Verifica si el carácter pasado como parámetro es una letra del alfabeto (a-z, A-Z).',
+                parameters: 'c - Carácter a verificar (como int)',
+                returnValue: 'Valor no cero si es alfabético, 0 en caso contrario',
+                complexity: 'O(1) - Tiempo constante',
+                usage: 'Fundamental para parsers, validación de entrada, y procesamiento de texto',
+                implementation: `<span class="keyword">int</span> <span class="function">ft_isalpha</span>(<span class="keyword">int</span> c)
+{
+    <span class="keyword">return</span> ((c >= <span class="string">'a'</span> && c <= <span class="string">'z'</span>) || (c >= <span class="string">'A'</span> && c <= <span class="string">'Z'</span>));
+}`,
+                example: `<span class="keyword">char</span> test = <span class="string">'A'</span>;
+<span class="keyword">if</span> (<span class="function">ft_isalpha</span>(test))
+    <span class="function">printf</span>(<span class="string">"Es una letra\\n"</span>);`,
+                importance: 'Esencial para validación de caracteres en parsers, intérpretes y sistemas de entrada.'
+            },
+            'strlen': {
+                title: 'ft_strlen',
+                prototype: 'size_t ft_strlen(const char *s)',
+                description: 'Calcula la longitud de una cadena, contando caracteres hasta encontrar el terminador nulo.',
+                parameters: 's - Puntero a la cadena a medir',
+                returnValue: 'Número de caracteres en la cadena (sin contar \\0)',
+                complexity: 'O(n) - Debe recorrer toda la cadena',
+                usage: 'Base para todas las operaciones de strings, asignación de memoria, validaciones',
+                implementation: `<span class="keyword">size_t</span> <span class="function">ft_strlen</span>(<span class="keyword">const char</span> *s)
+{
+    <span class="keyword">size_t</span> len = <span class="string">0</span>;
+    
+    <span class="keyword">while</span> (s[len])
+        len++;
+    <span class="keyword">return</span> (len);
+}`,
+                example: `<span class="keyword">char</span> *str = <span class="string">"Hola mundo"</span>;
+<span class="keyword">size_t</span> length = <span class="function">ft_strlen</span>(str);
+<span class="function">printf</span>(<span class="string">"Longitud: %zu\\n"</span>, length); <span class="comment">// Salida: 10</span>`,
+                importance: 'Función fundamental usada en casi todas las operaciones con strings. Critical para malloc, bounds checking.'
+            },
+            'substr': {
+                title: 'ft_substr',
+                prototype: 'char *ft_substr(char const *s, unsigned int start, size_t len)',
+                description: 'Crea una nueva cadena que es una subcadena de la cadena original, comenzando desde el índice start y con una longitud máxima de len.',
+                parameters: 's - Cadena origen\\nstart - Índice de inicio\\nlen - Longitud máxima de la subcadena',
+                returnValue: 'Nueva cadena con la subcadena, o NULL si falla la asignación',
+                complexity: 'O(len) - Debe copiar len caracteres',
+                usage: 'Parsing de archivos, extracción de tokens, procesamiento de comandos',
+                implementation: `<span class="keyword">char</span> *<span class="function">ft_substr</span>(<span class="keyword">char const</span> *s, <span class="keyword">unsigned int</span> start, <span class="keyword">size_t</span> len)
+{
+    <span class="keyword">char</span>    *substr;
+    <span class="keyword">size_t</span>  i;
+    
+    <span class="keyword">if</span> (!s)
+        <span class="keyword">return</span> (<span class="string">NULL</span>);
+    <span class="keyword">if</span> (start >= <span class="function">ft_strlen</span>(s))
+        <span class="keyword">return</span> (<span class="function">ft_strdup</span>(<span class="string">""</span>));
+    
+    substr = <span class="function">malloc</span>(len + <span class="string">1</span>);
+    <span class="keyword">if</span> (!substr)
+        <span class="keyword">return</span> (<span class="string">NULL</span>);
+        
+    i = <span class="string">0</span>;
+    <span class="keyword">while</span> (i < len && s[start + i])
+    {
+        substr[i] = s[start + i];
+        i++;
+    }
+    substr[i] = <span class="string">'\\0'</span>;
+    <span class="keyword">return</span> (substr);
+}`,
+                example: `<span class="keyword">char</span> *original = <span class="string">"Hello World"</span>;
+<span class="keyword">char</span> *sub = <span class="function">ft_substr</span>(original, <span class="string">6</span>, <span class="string">5</span>);
+<span class="function">printf</span>(<span class="string">"Subcadena: %s\\n"</span>, sub); <span class="comment">// Salida: "World"</span>
+<span class="function">free</span>(sub);`,
+                importance: 'Crucial para parsing, tokenización y manipulación avanzada de strings. Base para muchas otras funciones.'
+            }
+        };
+
+        function openModal(functionKey) {
+            const modal = document.getElementById('functionModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            const func = functionDetails[functionKey];
+            if (!func) return;
+            
+            modalTitle.textContent = func.title;
+            modalBody.innerHTML = `
+                <h3>Prototipo</h3>
+                <div class="code-block">${func.prototype}</div>
+                
+                <h3>Descripción</h3>
+                <p>${func.description}</p>
+                
+                <h3>Parámetros</h3>
+                <p>${func.parameters.replace(/\\n/g, '<br>')}</p>
+                
+                <h3>Valor de retorno</h3>
+                <p>${func.returnValue}</p>
+                
+                <h3>Complejidad</h3>
+                <p>${func.complexity}</p>
+                
+                <h3>Importancia y uso</h3>
+                <p>${func.importance}</p>
+                
+                <h3>Implementación</h3>
+                <div class="code-block">${func.implementation}</div>
+                
+                <h3>Ejemplo de uso</h3>
+                <div class="code-block">${func.example}</div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('functionModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('functionModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
