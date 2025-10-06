@@ -564,6 +564,61 @@
     <span class="function">printf</span>(<span class="string">"Es una letra\\n"</span>);`,
                 importance: 'Esencial para validación de caracteres en parsers, intérpretes y sistemas de entrada.'
             },
+            'isdigit': {
+                title: 'ft_isdigit',
+                prototype: 'int ft_isdigit(int c)',
+                description: 'Verifica si el carácter pasado como parámetro es un dígito decimal (0-9).',
+                parameters: 'c - Carácter a verificar (como int)',
+                returnValue: 'Valor no cero si es un dígito, 0 en caso contrario',
+                complexity: 'O(1) - Tiempo constante',
+                usage: 'Útil para validación de entradas numéricas, parsers, y procesamiento de cadenas que contienen números',
+                implementation: `<span class="keyword">int</span> <span class="function">ft_isdigit</span>(<span class="keyword">int</span> c)
+{
+    <span class="keyword">return</span> (c >= <span class="string">'0'</span> && c <= <span class="string">'9'</span>);
+}`,
+                example: `<span class="keyword">char</span> test = <span class="string">'5'</span>;
+<span class="keyword">if</span> (<span class="function">ft_isdigit</span>(test))
+    <span class="function">printf</span>(<span class="string">"Es un dígito\\n"</span>);`,
+                importance: 'Clave para validación de datos numéricos en parsers, conversión de cadenas a números, y filtrado de entradas.'
+            },
+            'isalnum': {
+                title: 'ft_isalnum',
+                prototype: 'int ft_isalnum(int c)',
+                description: 'Verifica si el carácter pasado como parámetro es alfanumérico, es decir, una letra (a-z, A-Z) o un dígito (0-9).',
+                parameters: 'c - Carácter a verificar (como int)',
+                returnValue: 'Valor no cero si es alfanumérico, 0 en caso contrario',
+                complexity: 'O(1) - Tiempo constante',
+                usage: 'Útil para validación de identificadores, nombres de variables, contraseñas y entradas que deben contener solo letras y números',
+                implementation: `<span class="keyword">int</span> <span class="function">ft_isalnum</span>(<span class="keyword">int</span> c)
+{
+    <span class="keyword">return</span> ((c >= <span class="string">'0'</span> && c <= <span class="string">'9'</span>) ||
+            (c >= <span class="string">'a'</span> && c <= <span class="string">'z'</span>) ||
+            (c >= <span class="string">'A'</span> && c <= <span class="string">'Z'</span>));
+}`,
+                example: `<span class="keyword">char</span> test = <span class="string">'7'</span>;
+<span class="keyword">if</span> (<span class="function">ft_isalnum</span>(test))
+    <span class="function">printf</span>(<span class="string">"Es alfanumérico\\n"</span>);`,
+                importance: 'Fundamental para validación de entradas de usuario, construcción de parsers y procesamiento de cadenas donde se esperan solo caracteres alfanuméricos.'
+            },
+            'isascii': {
+                title: 'ft_isascii',
+                prototype: 'int ft_isascii(int c)',
+                description: 'Verifica si el carácter pasado como parámetro pertenece al conjunto ASCII estándar (0–127).',
+                parameters: 'c - Carácter a verificar (como int)',
+                returnValue: 'Valor no cero si está dentro del rango ASCII, 0 en caso contrario',
+                complexity: 'O(1) - Tiempo constante',
+                usage: 'Útil para validar entradas y garantizar que los caracteres pertenecen al estándar ASCII, especialmente en contextos de compatibilidad o sistemas donde no se admiten caracteres extendidos.',
+                implementation: `<span class="keyword">int</span> <span class="function">ft_isascii</span>(<span class="keyword">int</span> c)
+{
+    <span class="keyword">return</span> (c >= 0 && c <= 127);
+}`,
+                example: `<span class="keyword">char</span> test = <span class="string">'A'</span>;
+<span class="keyword">if</span> (<span class="function">ft_isascii</span>(test))
+    <span class="function">printf</span>(<span class="string">"Es un carácter ASCII válido\\n"</span>);`,
+                importance: 'Esencial en validaciones de entrada y sistemas donde se trabaja con ASCII puro, evitando problemas con caracteres extendidos o codificaciones distintas.'
+            },
+            
+
             'strlen': {
                 title: 'ft_strlen',
                 prototype: 'size_t ft_strlen(const char *s)',
