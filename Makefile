@@ -3,7 +3,7 @@
 # ===========================================================
 NAME = libft.a # ← Archivo de biblioteca estática			#1
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -Isrc 
 AR = ar # ← comando ar, viene de "archiver"					#2
 ARFLAGS = rcs # ← reglas, cada letra conlleva una acción.	#3
 RM = rm -fr	
@@ -12,15 +12,18 @@ RM = rm -fr
 # ===========================================================
 # =                    SOURCES SECTION                      =
 # ===========================================================
-SRCS =	ft_isalpha.c /
-		ft_isdigit.c /
-		ft_isalnum.c /
-		ft_isascii.c /
-		ft_isprint.c /
-		ft_strlen.c /
-		ft_memset.c /
-		ft_bzero.c /
-		
+SRCS =	ft_isalpha.c \
+		ft_isdigit.c \
+		ft_isalnum.c \
+		ft_isascii.c \
+		ft_isprint.c \
+		ft_strlen.c \
+		ft_memset.c \
+		ft_bzero.c \
+		ft_memcpy.c \
+		ft_memmove.c \
+		ft_strlcpy.c \
+		ft_strlcat.c \
 
 
 
