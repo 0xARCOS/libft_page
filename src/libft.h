@@ -25,7 +25,7 @@ size_t  ft_strlcpy(char *dest, const char *src, size_t size);
 size_t  strlcat(char *dst, const char *src, size_t size);
 int     ft_toupper(int c);
 int     ft_tolower(int c);
-char    *ft_strchr(int c);
+char    *ft_strchr(const char *s, int c);
 int     ft_strncmp(const char *s1, const char *s2, size_t n);
 void    *memchr(const void *s, int c, size_t n);
 char    *ft_strnstr(const char *big, const char *little, size_t len);
@@ -34,5 +34,7 @@ void    *ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *s);
 char    *strjoin(const char *s1, const char *s2);
 char    *ft_strtrim(char const *s1, char const *set);
+char    *ft_substr(const char *s, unsigned int start, size_t len);
+char    **ft_split(char const *s, char c);
 
 #endif

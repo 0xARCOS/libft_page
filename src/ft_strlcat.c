@@ -11,9 +11,9 @@ size_t ft_strlen(const char *str)
 
 size_t strlcat(char *dst, const char *src, size_t size)
 {
-    size_t  i;
+    size_t  i = 0;
     size_t  j;
-    size_t  l;
+    size_t  l = 0;
 
     while (dst[l] != '\0' && l < size)
         l++;

@@ -13,7 +13,7 @@ char    *ft_substr(const char *s, unsigned int start, size_t len)
 {
     unsigned int s_len = ft_strlen(s);
     char *str = (char *)malloc((len + 1) * sizeof(char));
-    int i = 0;
+    size_t i = 0;
     
     if (start >= s_len || !*s)
         return NULL;

@@ -1,77 +1,90 @@
 # ===========================================================
 # =                    VARIABLES SECTION                    =
 # ===========================================================
-NAME = libft.a # ← Archivo de biblioteca estática			#1
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -Isrc 
-AR = ar # ← comando ar, viene de "archiver"					#2
-ARFLAGS = rcs # ← reglas, cada letra conlleva una acción.	#3
-RM = rm -fr	
-
+NAME    = libft.a
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror -g
+AR      = ar
+ARFLAGS = rcs
+RM      = rm -f
 
 # ===========================================================
 # =                    SOURCES SECTION                      =
 # ===========================================================
-SRCS =	ft_isalpha.c \
-		ft_isdigit.c \
-		ft_isalnum.c \
-		ft_isascii.c \
-		ft_isprint.c \
-		ft_strlen.c \
-		ft_memset.c \
-		ft_bzero.c \
-		ft_memcpy.c \
-		ft_memmove.c \
-		ft_strlcpy.c \
-		ft_strlcat.c \
-		ft_toupper.c \
-		ft_tolower.c \
-		ft_strchr.c \
-		ft_strncmp.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_strnstr.c \
-		ft_atoi.c \
-		ft_calloc.c \
-		ft_strdup.c \
-		ft_strjoin.c \
-		ft_strtrim.c
+SRCS =  ft_isalpha.c \
+        ft_isdigit.c \
+        ft_isalnum.c \
+        ft_isascii.c \
+        ft_isprint.c \
+        ft_strlen.c \
+        ft_memset.c \
+        ft_bzero.c \
+        ft_memcpy.c \
+        ft_memmove.c \
+        ft_strlcpy.c \
+        ft_strlcat.c \
+        ft_toupper.c \
+        ft_tolower.c \
+        ft_strchr.c \
+        ft_strncmp.c \
+        ft_memchr.c \
+        ft_memcmp.c \
+        ft_strnstr.c \
+        ft_atoi.c \
+        ft_calloc.c \
+        ft_strjoin.c \
+        ft_strtrim.c \
+        ft_substr.c \
+        ft_split.c
+        #ft_strdup.c \
 
-BSRC = ... .c
+# Si tienes bonus, ponlos aquí (o déjalo vacío)
+BONUS_SRCS =
+# BONUS_SRCS = ...
 
-OBJS = $(SRCS:.c=.o) # ← nos ahorramos el comodín			#4
-BOBJS = $(BSRC:.c=.o)
+OBJS      = $(SRCS:.c=.o)
+BONUS_OBJS= $(BONUS_SRCS:.c=.o)
 
 # ===========================================================
 # =                    RULES SECTION                        =
 # ===========================================================
 all: $(NAME)
 
-$(NAME) = $(OBJS)
-	@echo "\033[32mCompilando cabeza...\033[0m"
+$(NAME): $(OBJS)
+	@echo "\033[32mCompilando librería...\033[0m"
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJS)
-	@echo "\033[32mCabeza compilada: LIBRARY CREATED...\033[0m"
+	@echo "\033[32mOK: $(NAME) creada\033[0m"
 
-bonus: $(BOBJS)
-	@echo "\033[32mCompilando cabeza...\033[0m"
-	@$(AR) $(ARFLAGS) $(NAME) $(BOBJS)
-	@echo "\033[32mCabeza compilada: BONUS LIBRARY CREATED...\033[0m"
+bonus: $(OBJS) $(BONUS_OBJS)
+	@echo "\033[32mCompilando librería (bonus)...\033[0m"
+	@$(AR) $(ARFLAGS) $(NAME) $(OBJS) $(BONUS_OBJS)
+	@echo "\033[32mOK: $(NAME) con bonus\033[0m"
 
 %.o: %.c
-	@echo "\033[32mRepilando y Recopilando...\033[0m"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "\033[32mLimpiando cabeza...\033[0m"
-	$(RM) $(OBJS) $(BOBJS)
+	@echo "\033[33mLimpiando objetos...\033[0m"
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
-fclean:
-	@echo "\033[32mAcabando con todas las cabezas...\033[0m"
-	$(RM) (NAME)
+fclean: clean
+	@echo "\033[31mEliminando librería...\033[0m"
+	@$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+# === Targets de prueba opcionales (para tu main.c del split) ===
+TEST = split_tester
+TEST_SRCS = main.c
+test: $(TEST)
+	@./$(TEST)
+
+$(TEST): $(NAME) $(TEST_SRCS)
+	@$(CC) $(CFLAGS) $(TEST_SRCS) -L. -lft -fsanitize=address -o $(TEST)
+	@echo "\033[32mOK: $(TEST) listo\033[0m"
+
+.PHONY: all clean fclean re bonus test
+
 
 # 1. Un archivo .a es una colección de archivos objetos (.o) empaquetados
 # 	en una sola librería que después puede ser lanzada por otros programas.

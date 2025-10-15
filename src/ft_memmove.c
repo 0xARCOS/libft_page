@@ -7,7 +7,6 @@ void *ft_memmove(void *dest, const void *src, size_t n)
         return (dest);
     const char  *str;
     char        *ptr;
-    int         i;
 
     str = src;
     ptr = dest;
@@ -26,39 +25,40 @@ void *ft_memmove(void *dest, const void *src, size_t n)
     }
     return ((void *)dest);
 }
-#include <stdio.h>
-#include <string.h>
 
-// Prototipo de tu memmove personalizada
-void    *memmove(void *dest, const void *src, size_t n);
+// #include <stdio.h>
+// #include <string.h>
 
-void    print_buffer(const char *label, const char *buf, size_t n)
-{
-    size_t i = 0;
-    printf("%s: ", label);
-    while (i < n)
-        printf("%c", buf[i++]);
-    printf("\n");
-}
+// // Prototipo de tu memmove personalizada
+// void    *memmove(void *dest, const void *src, size_t n);
 
-int main(void)
-{
-    char    buf1[20] = "ABCDEFGHIJKLMN";
-    char    buf2[20] = "ABCDEFGHIJKLMN";
-    char    buf3[20] = "ABCDEFGHIJKLMN";
-    char    buf4[20] = "ABCDEFGHIJKLMN";
+// void    print_buffer(const char *label, const char *buf, size_t n)
+// {
+//     size_t i = 0;
+//     printf("%s: ", label);
+//     while (i < n)
+//         printf("%c", buf[i++]);
+//     printf("\n");
+// }
 
-    // Caso 1: Copia normal (no solapada)
-    ft_memmove(buf1 + 5, buf1, 5);
-    ft_memmove(buf2 + 5, buf2, 5); // libc
-    print_buffer("Custom no solap", buf1, 15);
-    print_buffer("Libc   no solap", buf2, 15);
+// int main(void)
+// {
+//     char    buf1[20] = "ABCDEFGHIJKLMN";
+//     char    buf2[20] = "ABCDEFGHIJKLMN";
+//     char    buf3[20] = "ABCDEFGHIJKLMN";
+//     char    buf4[20] = "ABCDEFGHIJKLMN";
 
-    // Caso 2: Copia hacia atrás (solapamiento)
-    ft_memmove(buf3, buf3 + 5, 5);
-    ft_memmove(buf4, buf4 + 5, 5); // libc
-    print_buffer("Custom solap  ", buf3, 15);
-    print_buffer("Libc   solap  ", buf4, 15);
+//     // Caso 1: Copia normal (no solapada)
+//     ft_memmove(buf1 + 5, buf1, 5);
+//     ft_memmove(buf2 + 5, buf2, 5); // libc
+//     print_buffer("Custom no solap", buf1, 15);
+//     print_buffer("Libc   no solap", buf2, 15);
 
-    return (0);
-}
+//     // Caso 2: Copia hacia atrás (solapamiento)
+//     ft_memmove(buf3, buf3 + 5, 5);
+//     ft_memmove(buf4, buf4 + 5, 5); // libc
+//     print_buffer("Custom solap  ", buf3, 15);
+//     print_buffer("Libc   solap  ", buf4, 15);
+
+//     return (0);
+// }

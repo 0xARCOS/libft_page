@@ -14,8 +14,8 @@ int in_set(char c, const char *set)
 
 char *ft_strtrim(char const *s1, char const *set)
 {
-    char        *first;
-    char        *last;
+    const char        *first;
+    const char        *last;
     size_t      len_s1;
     char        *trimmed_str;
 
@@ -26,7 +26,7 @@ char *ft_strtrim(char const *s1, char const *set)
     last = s1 + len_s1 - 1;
     while (first <= last && in_set(*first, set))
         first++;
-    while (last >= first && in_set(*last, set));
+    while (last >= first && in_set(*last, set))
         last--;
     
     trimmed_str = ft_substr(first, 0, last - first + 1);
@@ -38,5 +38,6 @@ int main(void)
 {
     const char  *s1 = ".-trim-me-.";
     const char  *set = ".-";
+    printf("%s", ft_strtrim(s1, set));
     return 0;
 }
