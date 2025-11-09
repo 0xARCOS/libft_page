@@ -12,3 +12,17 @@ char	*ft_strdup(const char *s)
     str[i] = '\0';
     return (str);
 }
+
+// Optimizado 
+/*
+char *ft_strdup(const char *s)
+{
+    char *str = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+    if (!str)
+        return NULL;
+    int i = 0;
+    while ((str[i] = s[i]) != '\0')
+        i++;
+    return (str);
+}
+*/
